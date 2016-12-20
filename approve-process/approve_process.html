@@ -43,8 +43,8 @@
 							<tbody>
 								<tr>
 									<td class="text-center" ng-repeat="item in configure.process track by $index">
-										<select class="selectpicker form-control xkd-select-style" ng-model="item.selected_user" ng-options="item.name for item in item.selectes track by item.id">
-											<option value="" ng-if="item.required==0">请选择</option>
+										<select class="selectpicker form-control xkd-select-style" ng-model="item.selected_user" ng-options="item1 as item1.name for item1 in item.selectes track by item1.id">
+											<option value="" ng-show="item.required==0">请选择</option>
 										</select>
 									</td>
 								</tr>

@@ -16,7 +16,6 @@ app.directive('approveProcess', ['$http','$localStorage', function($http, $local
 	};
 
 	function link (scope, element, attrs) {
-
 		// 打开选择审批人项
 		scope.showApproveSelect = function() {
 			$('#xkd_approve_process_'+scope.idIndex).modal('show');
@@ -80,6 +79,7 @@ app.directive('approveProcess', ['$http','$localStorage', function($http, $local
 			})); 
 		} else {
 			scope.approvers = $localStorage.getObject("xkd-approvers");
+			console.log(scope.approvers);
 		}
 
 		// 控制器的审批流程
