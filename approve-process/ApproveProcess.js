@@ -79,7 +79,6 @@ app.directive('approveProcess', ['$http','$localStorage', function($http, $local
 			})); 
 		} else {
 			scope.approvers = $localStorage.getObject("xkd-approvers");
-			console.log(scope.approvers);
 		}
 
 		// 控制器的审批流程
