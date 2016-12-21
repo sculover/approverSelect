@@ -20,6 +20,7 @@ app.directive('approveProcess', ['$http','$localStorage', function($http, $local
 		scope.showApproveSelect = function() {
 			$('#xkd_approve_process_'+scope.idIndex).modal('show');
 			scope.configure.selectedQueue = [];
+			scope.errorMsg = '';
 			// 控制器的审批流程
 			var approve_process = scope.configure.process;
 			if (approve_process && approve_process.length > 0) {
@@ -37,10 +38,25 @@ app.directive('approveProcess', ['$http','$localStorage', function($http, $local
 
 		// 确认选择
 		scope.confirmApproveList = function() {
-			$('#xkd_approve_process_'+scope.idIndex).modal('hide');
+			scope.errorMsg = '';
 			var approve_process = scope.configure.process;
 			if (approve_process && approve_process.length > 0) {
 				var _len = approve_process.length;
+				for (var i = 0; i < _len; i++) {
+					// 判断所有的必选项都选择了相应的审批人
+					if (approve_process[i].required) {
+						// console.log(approve_process[i].selected_user);
+						if (!approve_process[i].selected_user || !approve_process[i].selected_user.id) {
+							scope.errorMsg += approve_process[i].text+',';
+						}
+					}
+				}
+				// 如果有必选项没有选择，提示，不关闭modal
+				if (scope.errorMsg && scope.errorMsg.length > 0) {
+					scope.errorMsg = scope.errorMsg.substring(0, scope.errorMsg.length-1);
+					return;
+				}
+
 				for (var i = 0; i < _len; i++) {
 					if (approve_process[i].selected_user) {
 						if (!scope.configure.selectedQueue) {
@@ -51,6 +67,7 @@ app.directive('approveProcess', ['$http','$localStorage', function($http, $local
 					}
 				}
 			}
+			$('#xkd_approve_process_'+scope.idIndex).modal('hide');
 		}
 
 		// watch 是否是标准审批，改变必填项的选择

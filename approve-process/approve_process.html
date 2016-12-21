@@ -23,7 +23,7 @@
 							<label class="i-checks"><input type="radio" name="regular_{{idIndex}}" ng-model="configure.standard" value="0"><i></i>非常规</label>
 						</div>
 					</div>
-					<div class="row text-danger"><div class="col-xs-12">*{{contract.approverSelects.errorMsg}}项为必填项</div></div>
+					<div class="row text-danger"><div class="col-xs-12">*{{errorMsg}}项为必填项</div></div>
 					<div class="table-responsive">
 						<!-- 加载中 -->
 						<div class="loading" ng-if="loadingStates" ng-init="loadingStates=true">
