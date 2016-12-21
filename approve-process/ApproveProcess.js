@@ -20,6 +20,17 @@ app.directive('approveProcess', ['$http','$localStorage', function($http, $local
 		scope.showApproveSelect = function() {
 			$('#xkd_approve_process_'+scope.idIndex).modal('show');
 			scope.configure.selectedQueue = [];
+			// 控制器的审批流程
+			var approve_process = scope.configure.process;
+			if (approve_process && approve_process.length > 0) {
+				var _len = approve_process.length;
+				for (var i = 0; i < _len; i++) {
+					approve_process[i].selectes = scope.approvers[approve_process[i].value];
+					if (approve_process[i].required) {
+						approve_process[i].selected_user = approve_process[i].selectes[0];
+					}
+				}
+			}
 		}
 
 		getApprovers(scope, $http, $localStorage);
@@ -69,10 +80,7 @@ app.directive('approveProcess', ['$http','$localStorage', function($http, $local
 			return ($http({
 				url : scope.configure.getApproversUrl,
 				method : 'GET',
-				params : {
-					'accesstoken' : scope.configure.accesstoken,
-				}
-
+				params : scope.configure.requestParams
 			}).then(function(res) {
 				scope.approvers = res.data.data; //页面只加载一次审批人选项的数据
 				$localStorage.setObject("xkd-approvers",res.data.data);
@@ -81,7 +89,7 @@ app.directive('approveProcess', ['$http','$localStorage', function($http, $local
 			scope.approvers = $localStorage.getObject("xkd-approvers");
 		}
 
-		// 控制器的审批流程
+		/*// 控制器的审批流程
 		var approve_process = scope.configure.process;
 		if (approve_process && approve_process.length > 0) {
 			var _len = approve_process.length;
@@ -91,7 +99,7 @@ app.directive('approveProcess', ['$http','$localStorage', function($http, $local
 					approve_process[i].selected_user = approve_process[i].selectes[0];
 				}
 			}
-		}
+		}*/
 	}
 
 	function isEmptyObject(obj) {
