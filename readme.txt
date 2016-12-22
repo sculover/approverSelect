@@ -9,8 +9,11 @@ index.html里面需要引入
 在需要这个指令页面的控制器中配置如下
 $scope.approve_configure = {
 	'displayText' : '审批流程选择',
-	'accesstoken' : $scope.accesstoken,
-	'getApproversUrl' : $window.platformServer + 'inner-position-datas',
+	'requestParams' : {
+		'accesstoken' : $scope.accesstoken,
+		'appId' : APPID
+	},
+	'getApproversUrl' : $window.platformServer + 'approval/inner-position-datas/index',
 	'process' : [
 	{
 		'value' : 'DianZhang',
